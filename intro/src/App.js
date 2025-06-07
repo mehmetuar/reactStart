@@ -5,6 +5,8 @@ import ProductList from './ProductList';
 import { Container, Row, Col } from 'reactstrap'
 import alertify from "alertifyjs"
 
+
+
 export default class App extends Component {
 
   state = { currentCategory: "", products: [],cart:[] };
@@ -63,6 +65,7 @@ export default class App extends Component {
               <CategoryList currentCategory={this.state.currentCategory} changeCategory={this.changeCategory} info={CategoryInfo} />
             </Col>
             <Col xs="9">
+           
               <ProductList
                 products={this.state.products}
                 addToCart = {this.addToCart}
