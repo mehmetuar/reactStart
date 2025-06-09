@@ -23,7 +23,7 @@ export default class CategoryList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="category-list">
         <h3>{this.props.info.title}</h3>
 
         <ListGroup>

@@ -4,6 +4,7 @@ import CategoryList from './CategoryList';
 import ProductList from './ProductList';
 import { Container, Row, Col } from 'reactstrap'
 import alertify from "alertifyjs"
+import App7 from './App7.css';
 
 
 

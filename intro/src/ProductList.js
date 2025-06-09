@@ -5,7 +5,7 @@ export default class ProductList extends Component {
 
   render() {
     return (
-      <div>
+      <div className="product-list">
         <h3>{this.props.info.title} - {this.props.currentCategory}</h3>
         <Table>
           <thead>
@@ -46,7 +46,7 @@ export default class ProductList extends Component {
                 <td> {product.unitPrice} </td>
                 <td> {product.quantityPerUnit} </td>
                 <td> {product.unitsInStock} </td>
-                <td><Button onClick={()=>this.props.addToCart(product)} color="info"> Sepete Ekle </Button></td>
+                <td><Button onClick={()=>this.props.addToCart(product)} color="primary"> Sepete Ekle </Button></td>
               </tr>
             ))}
 
