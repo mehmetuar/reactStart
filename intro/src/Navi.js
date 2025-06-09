@@ -27,7 +27,15 @@ export default class Navi extends React.Component {
     return (
       <div>
         <Navbar color="light" light expand="md">
-          <NavbarBrand href="/">Selam React </NavbarBrand>
+        <NavbarBrand href="/">
+        <img
+    src="/reset.png"
+    alt="Logo"
+    width="60"
+    height="60"
+  />
+</NavbarBrand>
+
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>

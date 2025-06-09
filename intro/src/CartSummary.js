@@ -14,7 +14,12 @@ export default class CartSummary extends Component {
     renderSummary() {
         return (<UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
-                Sepetim - {this.props.cart.length}
+            <img
+    src="/groceries.png"
+    alt="Logo"
+    width="70"
+    height="70"
+  /> - {this.props.cart.length}
             </DropdownToggle>
             <DropdownMenu right>
                 {
@@ -29,7 +34,7 @@ export default class CartSummary extends Component {
 
 
                 <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+              
             </DropdownMenu>
         </UncontrolledDropdown>
         );
@@ -38,7 +43,12 @@ export default class CartSummary extends Component {
     renderEmptyCart() {
         return (
             <NavItem>
-            <NavLink> Sepet Bos </NavLink>
+            <NavLink> <img
+    src="/wicker-basket.png"
+    alt="Logo"
+    width="70"
+    height="70"
+  /> </NavLink>
             </NavItem>
         );
     }

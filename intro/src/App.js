@@ -9,7 +9,7 @@ import alertify from "alertifyjs"
 
 export default class App extends Component {
 
-  state = { currentCategory: "", products: [],cart:[] };
+  state = { currentCategory: "", products: [], cart: [] };
   changeCategory = (category) => {
     this.setState({ currentCategory: category.categoryName })
     this.getProducts(category.id);
@@ -30,24 +30,24 @@ export default class App extends Component {
       .then(data => this.setState({ products: data }));
   };
 
-  addToCart=(product) => {
+  addToCart = (product) => {
     let newCart = this.state.cart;
-   var addedItem = newCart.find(c=>c.product.id === product.id); 
-   if(addedItem){
-    addedItem.quantity+=1;
-   }
-   else{
-    newCart.push({product:product, quantity:1});
-   }
-   
-   this.setState({cart: newCart})
-   alertify.success(product.productName + " sepete eklendi.",2);
+    var addedItem = newCart.find(c => c.product.id === product.id);
+    if (addedItem) {
+      addedItem.quantity += 1;
+    }
+    else {
+      newCart.push({ product: product, quantity: 1 });
+    }
+
+    this.setState({ cart: newCart })
+    alertify.success(product.productName + " sepete eklendi.", 2);
   }
 
 
-  removeFromCart=(product)=>{
-     let newCart = this.state.cart.filter(c=>c.product.id!==product.id)
-     this.setState({cart:newCart})
+  removeFromCart = (product) => {
+    let newCart = this.state.cart.filter(c => c.product.id !== product.id)
+    this.setState({ cart: newCart })
   }
 
 
@@ -57,25 +57,24 @@ export default class App extends Component {
     return (
       <div >
         <Container>
-       
-            <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
-        
+
+          <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
+
           <Row>
             <Col xs="3">
               <CategoryList currentCategory={this.state.currentCategory} changeCategory={this.changeCategory} info={CategoryInfo} />
             </Col>
             <Col xs="9">
-           
+
               <ProductList
                 products={this.state.products}
-                addToCart = {this.addToCart}
+                addToCart={this.addToCart}
                 currentCategory={this.state.currentCategory}
                 info={ProductInfo} />
             </Col>
 
           </Row>
         </Container>
-
 
 
       </div>
