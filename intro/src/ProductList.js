@@ -12,29 +12,29 @@ export default class ProductList extends Component {
             <tr>
               <th> # </th>
               <th> Product Name    <img
-    src="/id.png"
-    alt="Logo"
-    width="25"
-    height="30"
-  />  </th>
+                src="/id.png"
+                alt="Logo"
+                width="25"
+                height="30"
+              />  </th>
               <th> Unit Price    <img
-    src="/price.png"
-    alt="Logo"
-    width="25"
-    height="30"
-  /> </th>
+                src="/price.png"
+                alt="Logo"
+                width="25"
+                height="30"
+              /> </th>
               <th> Quantity Per Unit    <img
-    src="/cost-per.png"
-    alt="Logo"
-    width="25"
-    height="30"
-  /> </th>
+                src="/cost-per.png"
+                alt="Logo"
+                width="25"
+                height="30"
+              /> </th>
               <th> Unit In Stock    <img
-    src="/packages.png"
-    alt="Logo"
-    width="25"
-    height="30"
-  /> </th>
+                src="/packages.png"
+                alt="Logo"
+                width="25"
+                height="30"
+              /> </th>
               <th> </th>
             </tr>
           </thead>
@@ -46,7 +46,18 @@ export default class ProductList extends Component {
                 <td> {product.unitPrice} </td>
                 <td> {product.quantityPerUnit} </td>
                 <td> {product.unitsInStock} </td>
-                <td><Button onClick={()=>this.props.addToCart(product)} color="primary"> Sepete Ekle </Button></td>
+                <td><Button onClick={() => this.props.addToCart(product)} color="primary">
+                  Sepete Ekle
+                  <img
+                    src="/plus.png"
+                    alt="Logo"
+                    width="17"
+                    height="18"
+                    style={{ marginLeft: "5px" }}
+                  />
+                </Button>
+
+                </td>
               </tr>
             ))}
 
