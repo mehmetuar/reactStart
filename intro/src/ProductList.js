@@ -11,10 +11,30 @@ export default class ProductList extends Component {
           <thead>
             <tr>
               <th> # </th>
-              <th> Product Name  </th>
-              <th> Unit Price </th>
-              <th> Quantity Per Unit </th>
-              <th> Unit In Stock </th>
+              <th> Product Name    <img
+    src="/id.png"
+    alt="Logo"
+    width="25"
+    height="30"
+  />  </th>
+              <th> Unit Price    <img
+    src="/price.png"
+    alt="Logo"
+    width="25"
+    height="30"
+  /> </th>
+              <th> Quantity Per Unit    <img
+    src="/cost-per.png"
+    alt="Logo"
+    width="25"
+    height="30"
+  /> </th>
+              <th> Unit In Stock    <img
+    src="/packages.png"
+    alt="Logo"
+    width="25"
+    height="30"
+  /> </th>
               <th> </th>
             </tr>
           </thead>
