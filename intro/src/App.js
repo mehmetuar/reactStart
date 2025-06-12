@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import Navi from './Navi';
 import CategoryList from './CategoryList';
 import ProductList from './ProductList';
+import CartList from './CartList';
 import { Container, Row, Col } from 'reactstrap'
 import alertify from "alertifyjs"
 import App7 from './App7.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 
 
@@ -57,25 +59,50 @@ export default class App extends Component {
     let CategoryInfo = { title: "Category List" }
     return (
       <div >
-        <Container>
+       
+  <Router>
+    <Container>
+      <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
 
-          <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
+      <Routes>
+     
+        <Route
+          path="/"
+          element={
+            <Row>
+              <Col xs="3">
+                <CategoryList
+                  currentCategory={this.state.currentCategory}
+                  changeCategory={this.changeCategory}
+                  info={CategoryInfo}
+                />
+              </Col>
+              <Col xs="9">
+                <ProductList
+                  products={this.state.products}
+                  addToCart={this.addToCart}
+                  currentCategory={this.state.currentCategory}
+                  info={ProductInfo}
+                />
+              </Col>
+            </Row>
+          }
+        />
 
-          <Row>
-            <Col xs="3">
-              <CategoryList currentCategory={this.state.currentCategory} changeCategory={this.changeCategory} info={CategoryInfo} />
-            </Col>
-            <Col xs="9">
-
-              <ProductList
-                products={this.state.products}
-                addToCart={this.addToCart}
-                currentCategory={this.state.currentCategory}
-                info={ProductInfo} />
-            </Col>
-
-          </Row>
-        </Container>
+        {/* Sepet Sayfası */}
+        <Route
+          path="/cart"
+          element={
+            <CartList
+              cart={this.state.cart}
+              removeFromCart={this.removeFromCart}
+            />
+          }
+        />
+      </Routes>
+    </Container>
+  </Router>
+);
 
 
       </div>
