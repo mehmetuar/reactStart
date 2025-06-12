@@ -102,7 +102,7 @@ export default class App extends Component {
       </Routes>
     </Container>
   </Router>
-);
+
 
 
       </div>
