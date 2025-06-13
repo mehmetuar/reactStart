@@ -53,6 +53,27 @@ export default class App extends Component {
     this.setState({ cart: newCart })
   }
 
+  increaseQuantity = (product) => {
+    const newCart = this.state.cart.map((item) =>
+      item.product.id === product.id
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
+    );
+    this.setState({ cart: newCart });
+  };
+  
+  decreaseQuantity = (product) => {
+    const newCart = this.state.cart
+      .map((item) =>
+        item.product.id === product.id
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      )
+      .filter((item) => item.quantity > 0); // 0’dan küçükleri sil
+    this.setState({ cart: newCart });
+  };
+  
+
 
   render() {
     let ProductInfo = { title: "Product List" }
@@ -91,14 +112,16 @@ export default class App extends Component {
 
         {/* Sepet Sayfası */}
         <Route
-          path="/cart"
-          element={
-            <CartList
-              cart={this.state.cart}
-              removeFromCart={this.removeFromCart}
-            />
-          }
-        />
+  path="/cart"
+  element={
+    <CartList
+      cart={this.state.cart}
+      removeFromCart={this.removeFromCart}
+      increaseQuantity={this.increaseQuantity}
+      decreaseQuantity={this.decreaseQuantity}
+    />
+  }
+/>
       </Routes>
     </Container>
   </Router>

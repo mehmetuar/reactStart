@@ -11,30 +11,45 @@ export default class CartList extends Component {
           <p>Sepetiniz boş.</p>
         ) : (
           <table className="table">
-            <thead>
-              <tr>
-                <th>Ürün</th>
-                <th>Adet</th>
-                <th>İşlem</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cart.map((item) => (
-                <tr key={item.product.id}>
-                  <td>{item.product.productName}</td>
-                  <td>{item.quantity}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => removeFromCart(item.product)}
-                    >
-                      Sil
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+  <thead>
+    <tr>
+      <th>Ürün</th>
+      <th>Adet</th>
+      <th>İşlem</th>
+    </tr>
+  </thead>
+  <tbody>
+    {cart.map((item) => (
+      <tr key={item.product.id}>
+        <td>{item.product.productName}</td>
+        <td>
+          <button
+            onClick={() => this.props.decreaseQuantity(item.product)}
+            className="btn btn-outline-danger btn-sm mx-1"
+          >
+            -
+          </button>
+          {item.quantity}
+          <button
+            onClick={() => this.props.increaseQuantity(item.product)}
+            className="btn btn-outline-success btn-sm mx-1"
+          >
+            +
+          </button>
+        </td>
+        <td>
+          <button
+            className="btn btn-danger"
+            onClick={() => this.props.removeFromCart(item.product)}
+          >
+            Sepetten Sil
+          </button>
+        </td>
+      </tr>
+    ))}
+  </tbody>
+</table>
+
         )}
       </div>
     );
