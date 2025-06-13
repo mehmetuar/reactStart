@@ -1,40 +1,44 @@
 import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 
-export default class Login extends Component {
+export default class Register extends Component {
   state = {
     username: "",
     password: "",
     redirect: false,
-    redirectToRegister: false,
   };
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleLogin = (e) => {
+  handleSubmit = (e) => {
     e.preventDefault();
-  
+
     const { username, password } = this.state;
-  
-    if (username && password) {
-      this.props.onLogin({ username, password });
-      this.setState({ redirect: true }); // Başarılıysa yönlendir
-    } else {
-      alert("Lütfen kullanıcı adı ve şifre girin.");
+
+    if (!username || !password) {
+      alert("Tüm alanları doldurunuz.");
+      return;
     }
+
+    // Yeni kullanıcıyı gönder
+    this.props.onRegister({ username, password });
+    alert("Kayıt başarılı! Giriş yapabilirsiniz.");
+
+    // Giriş sayfasına yönlendir
+    this.setState({ redirect: true });
   };
-  
+
   render() {
     if (this.state.redirect) {
-      return <Navigate to="/" replace />;
+      return <Navigate to="/login" replace />;
     }
-  
+
     return (
       <div style={{ padding: "30px", maxWidth: "400px", margin: "auto" }}>
-        <h2>Giriş Yap</h2>
-        <form onSubmit={this.handleLogin}>
+        <h2>Kayıt Ol</h2>
+        <form onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label>Kullanıcı Adı</label>
             <input
@@ -55,25 +59,11 @@ export default class Login extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <button className="btn btn-primary mt-3" type="submit">
-            Giriş Yap
-          </button>
-        </form>
-  
-        {/* 👇 Kayıt ol butonu */}
-        <div className="mt-3">
-          <p>Hesabınız yok mu?</p>
-          <button
-            className="btn btn-outline-secondary"
-            onClick={() => this.setState({ redirectToRegister: true })}
-          >
+          <button className="btn btn-success mt-3" type="submit">
             Kayıt Ol
           </button>
-        </div>
-  
-        {/* yönlendirme */}
-        {this.state.redirectToRegister && <Navigate to="/register" replace />}
+        </form>
       </div>
     );
-  } 
+  }
 }

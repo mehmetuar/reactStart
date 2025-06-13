@@ -9,6 +9,7 @@ import App7 from './App7.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
+import Register from "./Register";
 
 export default class App extends Component {
 
@@ -17,7 +18,9 @@ export default class App extends Component {
     currentCategory: "",
     products: [],
     cart: [],
+    users: [],
   };
+
 
   changeCategory = (category) => {
     this.setState({ currentCategory: category.categoryName })
@@ -75,9 +78,28 @@ export default class App extends Component {
     this.setState({ cart: newCart });
   };
 
-  handleLogin = () => {
-    this.setState({ isAuthenticated: true });
+  handleLogin = (credentials) => {
+    const userExists = this.state.users.find(
+      (user) =>
+        user.username === credentials.username &&
+        user.password === credentials.password
+    );
+  
+    if (userExists) {
+      this.setState({ isAuthenticated: true });
+      alertify.success("Giriş başarılı!");
+    } else {
+      alertify.error("Geçersiz kullanıcı adı veya şifre!");
+    }
   };
+  
+
+  handleRegister = (newUser) => {
+    this.setState((prevState) => ({
+      users: [...prevState.users, newUser],
+    }));
+  };
+
 
   render() {
     let ProductInfo = { title: "Product List" }
@@ -117,6 +139,10 @@ export default class App extends Component {
                   </Row>
                 </ProtectedRoute>
               }
+            />
+            <Route
+              path="/register"
+              element={<Register onRegister={this.handleRegister} />}
             />
 
             <Route
