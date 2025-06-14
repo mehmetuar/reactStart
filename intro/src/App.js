@@ -29,7 +29,14 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getProducts();
+  
+    const savedUsers = localStorage.getItem("users");
+    if (savedUsers) {
+      this.setState({ users: JSON.parse(savedUsers) });
+    }
+    
   }
+  
 
   getProducts = (categoryId) => {
     let url = "http://localhost:3000/products";
@@ -95,10 +102,22 @@ export default class App extends Component {
   
 
   handleRegister = (newUser) => {
-    this.setState((prevState) => ({
-      users: [...prevState.users, newUser],
-    }));
+    this.setState(
+      (prevState) => ({
+        users: [...prevState.users, newUser],
+      }),
+      () => {
+        // state güncellendikten sonra localStorage’a yaz
+        localStorage.setItem("users", JSON.stringify(this.state.users));
+      }
+    );
   };
+  handleLogout = () => {
+    this.setState({ isAuthenticated: false });
+    localStorage.removeItem("loggedIn");
+  };
+  
+  
 
 
   render() {
@@ -109,7 +128,10 @@ export default class App extends Component {
       <Router>
         <Container>
           {this.state.isAuthenticated && (
-            <Navi removeFromCart={this.removeFromCart} cart={this.state.cart} />
+            <Navi removeFromCart={this.removeFromCart} 
+            cart={this.state.cart}
+            onLogout={this.handleLogout} 
+            />
           )}
 
 
