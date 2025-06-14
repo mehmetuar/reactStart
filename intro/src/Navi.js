@@ -7,7 +7,7 @@ import {
   Nav,
 } from "reactstrap";
 import CartSummary from "./CartSummary";
-
+import { Link } from "react-router-dom";
 
 export default class Navi extends React.Component {
   constructor(props) {
@@ -30,32 +30,31 @@ export default class Navi extends React.Component {
           <NavbarBrand href="/">
             <img src="/reset.png" alt="Logo" width="60" height="60" />
           </NavbarBrand>
-  
+
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              {/* Sepet özeti */}
+            <Nav className="ms-auto d-flex align-items-center gap-3" navbar>
+              {/* Sepet Özeti */}
               <CartSummary
                 removeFromCart={this.props.removeFromCart}
                 cart={this.props.cart}
               />
-  
-              {/* Sağ üst köşe: Çıkış butonu */}
-              <div className="d-flex align-items-center ms-3">
-                <button
-                  className="btn btn-outline-danger btn-sm"
-                  onClick={() => {
-                    this.props.onLogout();
-                    window.location.href = "/login"; // yönlendirme
-                  }}
-                >
-                  Çıkış Yap
-                </button>
-              </div>
+           <Link to="/profile" className="btn btn-outline-primary btn-sm">Profil</Link>
+              {/* Çıkış Butonu */}
+              <button
+                className="btn btn-outline-danger btn-sm"
+                onClick={() => {
+                  this.props.onLogout();
+                  window.location.href = "/login";
+                }}
+              >
+                Çıkış Yap
+              </button>
+
             </Nav>
           </Collapse>
         </Navbar>
       </div>
     );
-  }  
+  }
 }

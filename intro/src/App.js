@@ -6,15 +6,17 @@ import CartList from './CartList';
 import { Container, Row, Col } from 'reactstrap'
 import alertify from "alertifyjs"
 import App7 from './App7.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from "./Login";
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
+import Profile from "./Profile";
 
 export default class App extends Component {
 
   state = {
     isAuthenticated: false,
+    currentUser: null,
     currentCategory: "",
     products: [],
     cart: [],
@@ -29,14 +31,25 @@ export default class App extends Component {
 
   componentDidMount() {
     this.getProducts();
-  
+
     const savedUsers = localStorage.getItem("users");
+    const isLoggedIn = localStorage.getItem("loggedIn");
+    const currentUser = localStorage.getItem("currentUser");
+
     if (savedUsers) {
       this.setState({ users: JSON.parse(savedUsers) });
     }
-    
+
+    if (isLoggedIn === "true" && currentUser) {
+      this.setState({
+        isAuthenticated: true,
+        currentUser: JSON.parse(currentUser),
+      });
+    }
   }
-  
+
+
+
 
   getProducts = (categoryId) => {
     let url = "http://localhost:3000/products";
@@ -86,20 +99,22 @@ export default class App extends Component {
   };
 
   handleLogin = (credentials) => {
-    const userExists = this.state.users.find(
-      (user) =>
-        user.username === credentials.username &&
-        user.password === credentials.password
+    const user = this.state.users.find(
+      (u) =>
+        u.username === credentials.username &&
+        u.password === credentials.password
     );
-  
-    if (userExists) {
-      this.setState({ isAuthenticated: true });
+
+    if (user) {
+      this.setState({ isAuthenticated: true, currentUser: user });
+      localStorage.setItem("loggedIn", "true");
+      localStorage.setItem("currentUser", JSON.stringify(user));
       alertify.success("Giriş başarılı!");
     } else {
       alertify.error("Geçersiz kullanıcı adı veya şifre!");
     }
   };
-  
+
 
   handleRegister = (newUser) => {
     this.setState(
@@ -113,11 +128,11 @@ export default class App extends Component {
     );
   };
   handleLogout = () => {
-    this.setState({ isAuthenticated: false });
+    this.setState({ isAuthenticated: false, currentUser: null });
     localStorage.removeItem("loggedIn");
+    localStorage.removeItem("currentUser");
   };
-  
-  
+
 
 
   render() {
@@ -128,15 +143,27 @@ export default class App extends Component {
       <Router>
         <Container>
           {this.state.isAuthenticated && (
-            <Navi removeFromCart={this.removeFromCart} 
-            cart={this.state.cart}
-            onLogout={this.handleLogout} 
+            <Navi removeFromCart={this.removeFromCart}
+              cart={this.state.cart}
+              onLogout={this.handleLogout}
             />
           )}
 
 
           <Routes>
-            <Route path="/login" element={<Login onLogin={this.handleLogin} />} />
+
+            <Route
+              path="/login"
+              element={
+                this.state.isAuthenticated ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Login onLogin={this.handleLogin} />
+                )
+              }
+            />
+
+
 
             <Route
               path="/"
@@ -177,6 +204,14 @@ export default class App extends Component {
                     increaseQuantity={this.increaseQuantity}
                     decreaseQuantity={this.decreaseQuantity}
                   />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute isAuthenticated={this.state.isAuthenticated}>
+                  <Profile currentUser={this.state.currentUser} />
                 </ProtectedRoute>
               }
             />
