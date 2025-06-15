@@ -116,6 +116,15 @@ export default class Register extends Component {
           <button className="btn btn-success mt-3" type="submit">
             Kayıt Ol
           </button>
+          <div className="text-center mt-4">
+            <p>
+              Zaten bir hesabınız var mı?{" "}
+              <a href="/login" className="text-primary" style={{ textDecoration: "underline" }}>
+                Giriş Yap
+              </a>
+            </p>
+          </div>
+
         </form>
       </div>
     );
