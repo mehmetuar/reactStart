@@ -6,6 +6,7 @@ export default class Register extends Component {
         username: "",
         password: "",
         confirmPassword: "",
+        location: "",
         redirect: false,
     };
 
@@ -41,9 +42,18 @@ export default class Register extends Component {
             alert("Şifre en az 1 büyük harf içermelidir.");
             return;
         }
+        if (this.state.location.trim().toLowerCase() === "konya") {
+            alert("Üzgünüz, Konyalı kullanıcılar kayıt olamaz.");
+            return;
+        }
 
         // Başarılıysa kayıt
-        this.props.onRegister({ username, password });
+        this.props.onRegister({
+            username: this.state.username,
+            password: this.state.password,
+            location: this.state.location,  
+          });
+          
         alert("Kayıt başarılı! Giriş yapabilirsiniz.");
         this.setState({ redirect: true });
     };
@@ -87,6 +97,17 @@ export default class Register extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
+                    <div className="form-group">
+                        <label>Memleketiniz</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            name="location"
+                            value={this.state.location}
+                            onChange={this.handleChange}
+                        />
+                    </div>
+
                     <button className="btn btn-success mt-3" type="submit">
                         Kayıt Ol
                     </button>

@@ -133,7 +133,23 @@ export default class App extends Component {
     localStorage.removeItem("currentUser");
   };
 
+  handleDeleteAccount = () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
+    // Kullanıcıyı user listesinden çıkar
+    const updatedUsers = users.filter(user => user.username !== currentUser.username);
+
+    // Güncellenmiş user listesi ve session’ı temizle
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("loggedIn");
+
+    this.setState({
+      isAuthenticated: false,
+      currentUser: null
+    });
+  };
 
   render() {
     let ProductInfo = { title: "Product List" }
@@ -211,10 +227,14 @@ export default class App extends Component {
               path="/profile"
               element={
                 <ProtectedRoute isAuthenticated={this.state.isAuthenticated}>
-                  <Profile currentUser={this.state.currentUser} />
+                  <Profile
+                    currentUser={this.state.currentUser}
+                    onDeleteAccount={this.handleDeleteAccount}
+                  />
                 </ProtectedRoute>
               }
             />
+
           </Routes>
         </Container>
       </Router>
